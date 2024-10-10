@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            background-image: url(images/sky.jpg);
+        }
+        main {
+            width: 60%;
+            height: 250px;
+            margin: auto;
+            margin-top: 80px;
+            box-shadow: 0px 0px 3px grey;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .caption {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            color: white;
+            font-size: 15px;
+            text-align: center;
+            background: bottom;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: gray;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 10;
+        }
+        .arrow.left {
+            left: 10px;
+        }
+        .arrow.right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+        <img src="images/fox.jpg" alt="" class="slide">
+        <p class="caption">FOX</p>
+        <img src="images/12.jpg.webp" alt="" class="slide">
+        <p class="caption">TIGER</p>
+        <img src="images/bunny.jpg" alt="" class="slide">
+        <p class="caption">BUNNY</p>
+        <img src="images/puffin.jpg" alt="" class="slide">
+        <p class="caption">PUFFINS</p>
+
+        <button class="arrow left" onclick="goPrev()">&#10094;</button>
+        <button class="arrow right" onclick="goNext()">&#10095;</button>
+</main>
+
+<script>
+    const slides = document.querySelectorAll(".slide");
+    const captions = document.querySelectorAll(".caption");
+    let counter = 0;
+
+    slides.forEach((slide, index) => {
+        slide.style.left = `${index * 100}%`;
+    });
+
+    const goPrev = () => {
+        counter = (counter === 0) ? slides.length - 1 : counter - 1;
+        slideimg();
+    };
+    const goNext = () => {
+        counter = (counter === slides.length - 1) ? 0 : counter + 1;
+        slideimg();
+    };
+    const goToSlide = (index) => {
+        counter = index;
+        slideimg();
+    };
+
+    const slideimg = () => {
+        slides.forEach(slide => {
+            slide.style.transform = `translateX(-${counter * 100}%)`;
+        });
+        updateCaptions();
+    };
+
+    const updateCaptions = () => {
+        captions.forEach((caption, index) => {
+            caption.style.display = (index === counter) ? 'block' : 'none';
+        });
+    };
+    updateCaptions();
+
+</script>
+</body>
+</html>
